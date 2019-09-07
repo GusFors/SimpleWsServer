@@ -23,7 +23,7 @@ wss.on('connection', function connection(ws) {
 
 wss.broadcast = (data) => {
     wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
+        if (client.readyState === webSocket.OPEN) {
 
 
             client.send(data)
