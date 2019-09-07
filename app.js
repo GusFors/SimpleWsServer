@@ -1,6 +1,16 @@
-const WebSocket = require('ws');
 
-const wss = new WebSocket.Server({ port: 8080 });
+const express = require('express')
+
+const websocket = require('ws')
+const http = require('http')
+const app = express()
+const server = http.createServer(app)
+const wss = new websocket.Server({ server })
+
+app.use((req, res, next) => {
+   
+    res.send('IndexPage')
+  })
 
 wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
@@ -22,6 +32,7 @@ wss.broadcast = (data) => {
         }
     })
 }
+server.listen(8080, () => console.log(`Listening on port ${app.get('port')}...`))
 
 setInterval(() => {
     wss.broadcast(JSON.stringify({ message: 'this is a heartbeat', when: new Date(), name: 'Server' }))
